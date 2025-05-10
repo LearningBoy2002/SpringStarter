@@ -1,13 +1,13 @@
 package org.practice.SpringStarter.Controller;
 
-import org.practice.SpringStarter.models.Account;
-import org.practice.SpringStarter.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.practice.SpringStarter.models.Account;
+import org.practice.SpringStarter.services.AccountService;
 
 @Controller
 public class AccountController {
@@ -17,10 +17,9 @@ public class AccountController {
 
     @GetMapping("/register")
     public String register(Model model) {
-
         Account account = new Account();
         model.addAttribute("account", account);
-        return "register";
+        return "account_views/register";
     }
 
     @PostMapping("/register")
@@ -31,8 +30,12 @@ public class AccountController {
 
     @GetMapping("/login")
     public String login(Model model) {
+        return "account_views/login";
+    }
 
-        return "login";
+    @GetMapping("/profile")
+    public String profile(Model model) {
+        return "account_views/profile";
     }
 
 }

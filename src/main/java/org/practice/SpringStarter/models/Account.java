@@ -1,11 +1,13 @@
 package org.practice.SpringStarter.models;
 
-import java.util.List;
-
+import java.util.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,24 @@ public class Account {
 
     private String firstname;
 
+    private String lastname;
+
+    private String role;
+
     @OneToMany(mappedBy = "account")
     private List<Post> posts;
+
+    @ManyToMany
+    @JoinTable(name = "account_authority", joinColumns = {
+            @JoinColumn(name = "account_id", referencedColumnName = "id") }, inverseJoinColumns = {
+                    @JoinColumn(name = "authority_id", referencedColumnName = "id") })
+    private Set<Authority> authorities = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Account [id=" + id + ", email=" + email + ", password=" + password + ", firstname=" + firstname
+                + ", lastname=" + lastname + ", role=" + role + ", posts=" + posts + ", authorities=" + authorities
+                + "]";
+    }
+
 }

@@ -16,7 +16,6 @@ public class PostService {
 
     public Optional<Post> getById(Long id) {
         return postRepository.findById(id);
-
     }
 
     public List<Post> getAll() {
@@ -33,4 +32,5 @@ public class PostService {
         }
         return postRepository.save(post);
     }
+
 }
