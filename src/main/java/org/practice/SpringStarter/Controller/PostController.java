@@ -14,7 +14,6 @@ import org.practice.SpringStarter.models.Account;
 import org.practice.SpringStarter.models.Post;
 import org.practice.SpringStarter.services.AccountService;
 import org.practice.SpringStarter.services.PostService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PostController {
@@ -82,5 +81,46 @@ public class PostController {
         }
         postService.save(post);
         return "redirect:/posts/" + post.getId();
+    }
+
+    @GetMapping("/posts/{id}/edit")
+    @PreAuthorize("isAuthenticated()")
+    public String getPostForEdit(@PathVariable Long id, Model model) {
+        Optional<Post> optionaPost = postService.getById(id);
+        if (optionaPost.isPresent()) {
+            Post post = optionaPost.get();
+            model.addAttribute("post", post);
+            return "post_views/post_edit";
+        } else {
+            return "404";
+        }
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    @PreAuthorize("isAuthenticated()")
+    public String updatePost(@PathVariable Long id, @ModelAttribute Post post) {
+        Optional<Post> optionalPost = postService.getById(id);
+        if (optionalPost.isPresent()) {
+            Post existingPost = optionalPost.get();
+            existingPost.setTitle(post.getTitle());
+            existingPost.setBody(post.getBody());
+            postService.save(existingPost);
+        }
+        return "redirect:/posts/" + post.getId();
+
+    }
+
+    @GetMapping("/posts/{id}/delete")
+    @PreAuthorize("isAuthenticated()")
+    public String deletePost(@PathVariable Long id) {
+        Optional<Post> optionalPost = postService.getById(id);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            postService.delete(post);
+            return "redirect:/";
+        } else {
+            return "redirect:/?error";
+        }
+
     }
 }
