@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -21,6 +22,10 @@ import org.practice.SpringStarter.util.constants.Roles;
 
 @Service
 public class AccountService implements UserDetailsService {
+
+    @Value("${spring.mvc.static-path-pattern}")
+    private String photo_prefix;
+
     @Autowired
     private AccountRepository accountRepository;
 
@@ -32,6 +37,11 @@ public class AccountService implements UserDetailsService {
         if (account.getRole() == null) {
             account.setRole(Roles.USER.getRole());
         }
+        if (account.getPhoto() == null) {
+            String path = photo_prefix.replace("**", "images/person.png");
+            account.setPhoto(path);
+        }
+
         return accountRepository.save(account);
     }
 
@@ -52,7 +62,6 @@ public class AccountService implements UserDetailsService {
         }
 
         return new User(account.getEmail(), account.getPassword(), grantedAuthority);
-
     }
 
     public Optional<Account> findOneByEmail(String email) {

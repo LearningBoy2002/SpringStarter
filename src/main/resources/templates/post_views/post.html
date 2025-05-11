@@ -11,54 +11,37 @@
     </div>
     <header th:replace="/fragments/header :: header">
   </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Опасность!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          You Sure ?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">
-            Delete
-          </button>
+  <section class="food_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form_container">
+            <h3> Add post </h3>
+            <form action="#" th:action="@{/posts/add}" th:object="${post}" method="post">
+              <div class="form-group">
+                <input type="hidden" id="account" name="account" th:field="*{account}" />
+                <input id="title" th:field="*{title}" name="title" type="text" class="form-control"
+                  placeholder="title" />
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger" role="alert">
+                  title Error</p>
+              </div>
+              <div class="form-group">
+                <textarea id="editor" th:field="*{body}" name="body"></textarea>
+                <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" class="alert alert-danger" role="alert">
+                  title Error</p>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Add post
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <section class="about_section layout_padding">
-    <div class="container  ">
-      <div class="post">
-        <h3><a th:text="${post.title}">Title</a></h3>
-        <h5 th:text="'Author: '+ ${post.account.firstname} + 
-        ' | Created at: '+${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')} +
-        ' | Updated at: '+${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm')}"></h5>
-        <p th:utext="${post.body}">body</p>
-        <hr color="grey" />
-        <div sec:authorize="isAuthenticated()" th:if="${isOwner}">
-          <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="btn btn-secondary btn-lg active" role="button"
-            aria-pressed="true">Edit</a> |
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">
-            Delete
-          </button>
-
-        </div>
-      </div>
-    </div>
   </section>
+  <!-- end book section -->
   <footer th:replace="/fragments/footer :: footer">
 </body>
-
 
 </html>

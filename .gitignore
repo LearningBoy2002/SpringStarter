@@ -33,4 +33,7 @@ build/
 
 ### VS Code ###
 .vscode/
-/db/
+structure.txt
+db/blogdb.mv.db
+db/blogdb.trace.db
+

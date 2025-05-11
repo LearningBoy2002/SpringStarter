@@ -1,5 +1,6 @@
 package org.practice.SpringStarter.config;
 
+import java.time.LocalDate;
 import java.util.*;
 import org.practice.SpringStarter.models.Account;
 import org.practice.SpringStarter.models.Authority;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SeedData implements CommandLineRunner {
+
     @Autowired
     private PostService postService;
 
@@ -32,41 +34,49 @@ public class SeedData implements CommandLineRunner {
             authority.setId(auth.getId());
             authority.setName(auth.getPrivillage());
             authorityService.save(authority);
+
         }
 
         Account account01 = new Account();
         Account account02 = new Account();
         Account account03 = new Account();
         Account account04 = new Account();
-        Account account05 = new Account();
 
-        account01.setEmail("account01demo@gmail.com");
-        account01.setPassword("password01");
-        account01.setFirstname("user01");
-        account01.setLastname("LastName01");
+        account01.setEmail("user@user.com");
+        account01.setPassword("pass987");
+        account01.setFirstname("User");
+        account01.setLastname("lastname");
+        account01.setAge(25);
+        account01.setDate_of_birth(LocalDate.parse("1990-01-01"));
+        account01.setGender("Male");
 
-        account02.setEmail("account02demo@gmail.com");
-        account02.setPassword("password02");
-        account02.setFirstname("user02");
-        account02.setLastname("LastName02");
+        account02.setEmail("admin@admin.com");
+        account02.setPassword("pass987");
+        account02.setFirstname("Admin");
+        account02.setLastname("lastname");
+        account02.setRole(Roles.ADMIN.getRole());
+        account02.setAge(25);
+        account02.setDate_of_birth(LocalDate.parse("1990-01-01"));
+        account02.setGender("Famale");
 
         account03.setEmail("editor@editor.com");
         account03.setPassword("pass987");
         account03.setFirstname("Editor");
         account03.setLastname("lastname");
         account03.setRole(Roles.EDITOR.getRole());
+        account03.setAge(55);
+        account03.setDate_of_birth(LocalDate.parse("1975-01-01"));
+        account03.setGender("Male");
 
         account04.setEmail("super_editor@editor.com");
         account04.setPassword("pass987");
         account04.setFirstname("Editor");
         account04.setLastname("lastname");
         account04.setRole(Roles.EDITOR.getRole());
+        account04.setAge(40);
+        account04.setDate_of_birth(LocalDate.parse("1980-01-01"));
+        account04.setGender("Female");
 
-        account05.setEmail("admin@admin.com");
-        account05.setPassword("pass987");
-        account05.setFirstname("Admin");
-        account05.setLastname("lastname");
-        account05.setRole(Roles.ADMIN.getRole());
         Set<Authority> authorities = new HashSet<>();
         authorityService.findById(Privillages.ACCESS_ADMIN_PANEL.getId()).ifPresent(authorities::add);
         authorityService.findById(Privillages.RESET_ANY_USER_PASSWORD.getId()).ifPresent(authorities::add);
@@ -76,100 +86,36 @@ public class SeedData implements CommandLineRunner {
         accountService.save(account02);
         accountService.save(account03);
         accountService.save(account04);
-        accountService.save(account05);
 
         List<Post> posts = postService.getAll();
         if (posts.size() == 0) {
             Post post01 = new Post();
-            post01.setTitle("Post 01");
+            post01.setTitle("About Git");
             post01.setBody(
                     """
+                               Git (/ɡɪt/)[8] is a distributed version control system: tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development. Its goals include speed, data integrity, and support for distributed, non-linear workflows (thousands of parallel branches running on different systems).[9][10][11]
 
-                            <img src="https://swarajya.gumlet.io/swarajya/2023-07/effd691a-7af9-4221-9d8a-10b60f2b08c0/Arjun_MK1A_field_trials__1_.jpg?w=610&q=50&compress=true&format=auto" alt="M1 Abrams Tank" style="width:100%;max-width:600px;"/>
-                                               Arjun Tank Project Could Suffer Another Devastating Delay, Thanks To Army's Decades-Long Reluctance To Back It
-                                   Ujjwal Shrotryia
-                                   Indian Army's indigenous Arjun Mk-1A tank.
-                                   Indian Army's indigenous Arjun Mk-1A tank.
-                                   The Indian Army's reluctance to fully commit to the DRDO-designed Arjun tank has once again thrown a spanner in the works for India's aspirations of having a homegrown main battle tank (MBT).
+                               Git was originally authored by Linus Torvalds in 2005 for development of the Linux kernel, with other kernel developers contributing to its initial development.[12] Since 2005, Junio Hamano has been the core maintainer. As with most other distributed version control systems, and unlike most client–server systems, every Git directory on every computer is a full-fledged repository with complete history and full version-tracking abilities, independent of network access or a central server.[13] Git is free and open-source software distributed under the GPL-2.0-only license.
 
-                                   This hesitation to place substantial orders for the Arjun tank has led to supply chain issues with the production line of the German-made 1400 HP MTU MB 838 Ka-501 V10 diesel-engine, powering the Arjun Mk-1 tank, shutting down.
-
-                                   Its engine manufacturer, MTU, has indicated that it will take another four years to get the production line back up. This means more delays for the already delayed Arjun tank programme — a situation where the blame rests squarely on the shoulders of the army.
-
-                                   Moreover, the stoppage of production of the MTU engine will adversely affect the availability of spare parts for the existing engines in use with the Arjun Mk-1 tanks, exacerbating issues that have plagued the fleet of 124 Arjun tanks for quite some time.
-
-                                   In 2015, it was reported that almost 75 per cent of the fleet was grounded due to a lack of spare parts for the engine, transmission, and issues in the thermal and targeting systems of the tank — all stemming from challenges in importing foreign components.
-
-                                   This starkly highlights the complications arising from ordering such small quantities.
-
-                                   However, the effect of the German engine going out of production will be limited as Heavy Vehicles Factory (HVF) Avadi just two days ago (13 February) demonstrated the ability to maintain and repair the existing 1400 HP engine, entirely in India without any foreign help.
-
-                                   The army has repeatedly given step-motherly treatment to the DRDO-designed tank, favouring the Russian T-90 tank, which the Arjun tank outperformed, fair and square, in comparative trials conducted in Rajasthan in 2010.
-
-                                   Arjun bested the Russian T-90 MBT in every parameter — from gunnery to mobility in cross-country terrain. And, this is setting aside the relaxation given to T-90 in multiple parameters.
-
-                                   Despite Arjun's superior performance, the army continued to obstruct its procurement, pointing out one deficiency after another.
-
-                                   The tank's hefty weight of about 62.5 tonnes was cited as the official reason for not purchasing it in large quantities, arguing that its weight would hinder its ability to navigate roads and bridges near the Pakistan border, on top of asking for 83 tweaks to make it battle-ready, including 15 major ones.
-
-                                   Ironically, the requested modifications led to an increase in weight to more than 68 tonnes, 6 tonnes more than before.
-
-                                   Even after DRDO unveiled the latest model in 2018, the Arjun Mk-1A, with the suggested modifications, the army dragged its feet for another three years before placing an order, citing concerns over high import content, spare parts scarcity, and the lack of suitable ammunition.
-
-                                   It was only in 2021, when the army, under immense pressure from the Ministry of Defence (MoD), relented and ordered 118 Arjun Mk-1A tanks worth Rs 7,523 crore, with deliveries set to begin in 2024.
-
-                                   Now, with the engine production ceasing, more delays are anticipated.
-
-                                   But it's not all doom and gloom.
-
-                                   The DRDO is testing its own in-house designed 1500 HP DATRAN diesel engine. Its first prototype entered testing in 2023, and is anticipated to be lighter and more powerful than the German 1400 HP engine used by the Arjun Mk-1.
-
-                                   Kicked off in 2010, a more powerful and uprated 1800 HP variant of the engine will also power the future ready combat vehicle — the next generation tank weighing around 50 tonnes with induction scheduled in the next decade.
-                                                       """);
+                            """);
             post01.setAccount(account01);
             postService.save(post01);
 
             Post post02 = new Post();
-            post02.setTitle("Post 02");
+            post02.setTitle("Spring Boot Model–view–controller framework");
             post02.setBody(
                     """
-                            <img src="https://images02.military.com/sites/default/files/media/equipment/military-vehicles/m1a2-abrams-main-battle-tank/2014/02/m1a2-abrams-battle-tank-05.jpg" alt="M1 Abrams Tank" style="width:100%;max-width:600px;"/>
 
+                              <h3><strong>Model–view–controller framework</strong></h3>
+                              <p><a href="https://en.wikipedia.org/wiki/File:Spring5JuergenHoeller2.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Spring5JuergenHoeller2.jpg/220px-Spring5JuergenHoeller2.jpg" alt="" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Spring5JuergenHoeller2.jpg/330px-Spring5JuergenHoeller2.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Spring5JuergenHoeller2.jpg/440px-Spring5JuergenHoeller2.jpg 2x" sizes="100vw" width="220"></a></p><p>&nbsp;</p><p>Spring MVC/Web Reactive presentation given by Jürgen Höller</p><p>The Spring Framework features its own <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">model–view–controller</a> (MVC) <a href="https://en.wikipedia.org/wiki/Web_application_framework">web application framework</a>, which was not originally planned. The Spring developers decided to write their own Web framework as a reaction to what they perceived as the poor design of the (then) popular <a href="https://en.wikipedia.org/wiki/Jakarta_Struts">Jakarta Struts</a> Web framework,<a href="https://en.wikipedia.org/wiki/Spring_Framework#cite_note-21">[21]</a> as well as deficiencies in other available frameworks. In particular, they felt there was insufficient separation between the presentation and request handling layers, and between the request handling layer and the model.<a href="https://en.wikipedia.org/wiki/Spring_Framework#cite_note-22">[22]</a></p><p>Like Struts, Spring MVC is a request-based framework. The framework defines <a href="https://en.wikipedia.org/wiki/Strategy_pattern">strategy</a> interfaces for all of the responsibilities that must be handled by a modern request-based framework. The goal of each interface is to be simple and clear so that it's easy for Spring MVC users to write their own implementations, if they so choose. MVC paves the way for cleaner front end code. All interfaces are tightly coupled to the <a href="https://en.wikipedia.org/wiki/Java_Servlet">Servlet API</a>. This tight coupling to the Servlet API is seen by some as a failure on the part of the Spring developers to offer a high-level abstraction for Web-based applications[<a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed"><i>citation needed</i></a>]. However, this coupling makes sure that the features of the Servlet API remain available to developers while also offering a high abstraction framework to ease working with it.</p><p>The DispatcherServlet class is the <a href="https://en.wikipedia.org/wiki/Front_controller">front controller</a><a href="https://en.wikipedia.org/wiki/Spring_Framework#cite_note-23">[23]</a> of the framework and is responsible for delegating control to the various interfaces during the execution phases of an <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP request</a>.</p><p>The most important interfaces defined by Spring MVC, and their responsibilities, are listed below:</p><ul><li>Controller: comes between Model and View to manage incoming requests and redirect to proper response. Controller will map the http request to corresponding methods. It acts as a gate that directs the incoming information. It switches between going into model or view.</li><li>HandlerAdapter: execution of objects that handle incoming requests</li><li>HandlerInterceptor: interception of incoming requests comparable, but not equal to Servlet filters (use is optional and not controlled by DispatcherServlet).</li><li>HandlerMapping: selecting objects that handle incoming requests (handlers) based on any attribute or condition internal or external to those requests</li><li>LocaleResolver: resolving and optionally saving of the <a href="https://en.wikipedia.org/wiki/Locale_(computer_software)">locale</a> of an individual user</li><li>MultipartResolver: facilitate working with file uploads by wrapping incoming requests</li><li>View: responsible for returning a response to the client. Some requests may go straight to view without going to the model part; others may go through all three.</li><li>ViewResolver: selecting a View based on a logical name for the view (use is not strictly required)</li></ul><p>Each strategy interface above has an important responsibility in the overall framework. The abstractions offered by these interfaces are powerful, so to allow for a set of variations in their implementations, Spring MVC ships with implementations of all these interfaces and together offers a feature set on top of the Servlet API. However, developers and vendors are free to write other implementations. Spring MVC uses the Java java.util.Map interface as a data-oriented abstraction for the Model where keys are expected to be string values.</p><p>The ease of testing the implementations of these interfaces seems one important advantage of the high level of abstraction offered by Spring MVC. DispatcherServlet is tightly coupled to the Spring inversion of control container for configuring the web layers of applications. However, web applications can use other parts of the Spring Framework—including the container—and choose not to use Spring MVC.</p>
 
-                            <h1>Topic: Abrams Tank</h1>
-                               Blog Brand: The Buzz
-                               Tags: Abrams Tank, M1A1 Abrams Tank, Military, NATO, Russia-Ukraine War, and U.S. Army
-                               Ukraine’s M1 Abrams Tanks Could Smash Through Russia’s Defenses
-                               October 1, 2023
-                               By: Alex Hollings
-                               Share
-                               Share this link on Facebook
-                               Share this page on X (Twitter)
-                               Share this link on LinkedIn
-                               Email a link to this page
-                               An undisclosed number of American M1 Abrams main battle tanks have now arrived in Ukraine, giving the embattled nation a small boost in armored capability amid its ongoing counter-offensive.
+                            """);
 
-                               Ukrainian President Volodymyr Zelensky took to X (previously known as Twitter) to announce their arrival on Monday morning.
-
-                               “Good news from Defense Minister Umerov. Abrams are already in Ukraine and are preparing to reinforce our brigades. I am grateful to our allies for fulfilling the agreements! We are looking for new contracts and expanding the geography of supply,” Zelensky wrote.
-
-                               The United States has promised Ukraine a total of 31 Abrams tanks, amounting to less than 10% of at least 321 total Western tanks headed for – or already in – the European nation. Exactly how many Abrams have arrived is unclear, but Politico reported in June that the first delivery of American tanks would include 10 M1A1 tanks, with the subsequent 21 coming later in the fall. According to the New York Times, anonymous sources within the Pentagon said the tanks arrived in-country on Saturday. The decision to provide Ukraine with refurbished M1A1s, rather than more modern M1A2s, was based on trying to expedite their arrival.
-
-                               However, despite the M1 Abrams’ now-legendary prowess on the battlefield, this small number of tanks is unlikely to play a massive role in Ukraine’s counteroffensive. Instead, the Biden administration’s decision to provide Ukraine with these tanks could arguably be considered a diplomatic move, as it was America’s commitment to send tanks that many credit with Germany’s ultimate decision to allow countries to provide Ukraine with other heavy weapons and platforms, like Leopard 2 main battle tanks.
-
-
-                               Leopard 2s quickly became the first Western tanks to see action on Ukraine’s behalf in June of this year, with videos of their participation in the counteroffensive surfacing shortly thereafter. In August, it was reported that Ukraine had received at least 71 Leopard IIs already, and had lost only five in combat up to that date.
-
-                               While older than America’s top-of-the-line Abrams, the M1A1s Ukraine is receiving will still present a serious threat to the variety of Russian tanks, some of which are extremely dated. In particular, the Abrams optics will enable better night-fighting capabilities, while the tank’s armor and defensive systems offer a greater degree of survivability. The Abrams, for instance, stows its 120mm main gun ammunition in a sealed compartment on the back of the turret. As a result, a direct hit that manages to penetrate its armor will blow the shells out the back, rather than killing the tank’s occupants. Many Russian tanks like the T-72 and T-80, however, store their ammunition in the turret itself. When hit, this results in a catastrophic failure many have taken to calling the “jack in the box” effect, blowing the turret high into the sky and killing the tank’s crew.
-
-                               “As President Zelensky said earlier today, the first batch of the 31 Abrams tanks have arrived in Ukraine. The mere presence of Abrams tanks serves as a potent deterrent. By having these tanks in their arsenal, the Ukrainian Army can more effectively discourage aggressive actions. Providing the Abrams tanks signifies a tangible commitment to Ukraine’s defense and stability, underscoring U.S. support for its partners facing external pressures. We will continue to focus on what we can do to help Ukraine succeed on the battlefield and protect its people,” a Pentagon statement sent to the Warzone said.
-
-                               However, these Abrams may not see the battlefield any time soon. The initial batch will likely be kept in hiding to avoid being taken out by Russian missiles until the rest arrive and they can be used in larger numbers. The last thing Ukraine wants to happen is to lose these tanks before they even enter the fight.
-
-
-                                           """);
             post02.setAccount(account02);
             postService.save(post02);
+
         }
+
     }
+
 }

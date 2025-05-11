@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,16 +19,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @NotBlank(message = "Missing Post title")
     private String title;
 
     @Column(columnDefinition = "TEXT")
+    @NotBlank(message = "Missing Post body")
     private String body;
 
     private LocalDateTime createdAt;
+
     private LocalDateTime updatedAt;
 
     @ManyToOne
