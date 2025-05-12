@@ -37,3 +37,4 @@ structure.txt
 db/blogdb.mv.db
 db/blogdb.trace.db
 
+src/main/resources/static/uploads/
