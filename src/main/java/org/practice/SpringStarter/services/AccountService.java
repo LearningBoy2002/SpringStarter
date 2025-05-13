@@ -72,4 +72,8 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findById(id);
     }
 
+    public Optional<Account> findByToken(String token) {
+        return accountRepository.findByToken(token);
+    }
+
 }
