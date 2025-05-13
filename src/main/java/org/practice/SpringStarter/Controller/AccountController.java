@@ -29,13 +29,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.practice.SpringStarter.models.Account;
 import org.practice.SpringStarter.services.AccountService;
+import org.practice.SpringStarter.services.EmailService;
 import org.practice.SpringStarter.util.AppUtil;
+import org.practice.SpringStarter.util.email.EmailDetails;
 
 @Controller
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Value("${spring.mvc.static-path-pattern}")
     private String photo_prefix;
@@ -177,6 +182,14 @@ public class AccountController {
             account.setPassword_reset_token(reset_token);
             account.setPassword_reset_token_expiry(LocalDateTime.now().plusMinutes(password_token_timeout));
             accountService.save(account);
+            String reset_message = "This is the reset password link: http://localhost/reset-password?token"
+                    + reset_token;
+            EmailDetails emailDetails = new EmailDetails(account.getEmail(), reset_message,
+                    "Reset password StudyEasy demo");
+            if (emailService.sendSimpleEmail(emailDetails) == false) {
+                attributes.addFlashAttribute("error", "Error while sending email, contact admin");
+                return "redirect:/forgot-password";
+            }
             attributes.addFlashAttribute("message", "Password reset email sent");
             return "redirect:/login";
 

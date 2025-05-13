@@ -38,3 +38,4 @@ db/blogdb.mv.db
 db/blogdb.trace.db
 
 src/main/resources/static/uploads/
+src/main/resources/secret.properties
