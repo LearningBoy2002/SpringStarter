@@ -10,9 +10,12 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import javax.validation.Valid;
-
 import org.apache.commons.lang3.RandomStringUtils;
+import org.practice.SpringStarter.models.Account;
+import org.practice.SpringStarter.services.AccountService;
+import org.practice.SpringStarter.services.EmailService;
+import org.practice.SpringStarter.util.AppUtil;
+import org.practice.SpringStarter.util.email.EmailDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,11 +30,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.practice.SpringStarter.models.Account;
-import org.practice.SpringStarter.services.AccountService;
-import org.practice.SpringStarter.services.EmailService;
-import org.practice.SpringStarter.util.AppUtil;
-import org.practice.SpringStarter.util.email.EmailDetails;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class AccountController {

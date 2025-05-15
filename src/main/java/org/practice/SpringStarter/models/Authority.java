@@ -1,8 +1,7 @@
 package org.practice.SpringStarter.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
